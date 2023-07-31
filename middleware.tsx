@@ -3,9 +3,9 @@ import { NextResponse, NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
     const url = request.nextUrl
     //console.log(url)
-    // if (url.pathname === '/') { 
-    //     return NextResponse.rewrite(new URL('/vote-pegawai', request.url))  
-    // }
+    if (url.pathname === '/') { 
+        return NextResponse.rewrite(new URL('/dashboard', request.url))  
+    }
     if (url.pathname.startsWith('/pleno')) { 
         //console.log('REWRETE MIDDLE') 
         return NextResponse.redirect(new URL('/vote-pegawai', request.url))

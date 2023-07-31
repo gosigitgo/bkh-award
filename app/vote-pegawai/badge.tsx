@@ -16,9 +16,8 @@ export default function BadgePegawai() {
                     </div>
                     <div>
                         <p className="font-bold">Informasi</p>
-                        <p className="text-sm">Pilihlah <strong>1 (satu)</strong> pegawai di lingkungan Unit / Satuan Kerja mu yang paling menggambarkan perilaku BerAkhlak !</p>
-                        <p className="text-sm">Pemilihan dapat dilakukan pada tanggal&nbsp;
-                            <strong>01 Agustus - 30 Agustus 2023 (Periode Triwulan III)</strong>
+                        <p className="text-sm">Pilihlah <strong>1 (satu)</strong> pegawai di lingkungan Unit / Satuan Kerja mu yang paling menggambarkan perilaku <strong>BerAKHLAK</strong>. Pemilihan <strong>Periode Triwulan III  (Tahun 2023)</strong> dapat dilakukan pada tanggal&nbsp;
+                             <strong>01 Agustus - 30 Agustus 2023</strong>
                         </p>
                         <Riwayat />
                     </div>

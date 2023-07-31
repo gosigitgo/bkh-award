@@ -1,21 +1,29 @@
+'use client'
+
 import PegawaiVotePusat from "./pegawai_vote_pusat"
-import { setCookie, deleteCookie } from 'cookies-next';
+import { LoadingScreen } from "../components/loadingscreen"
+import { useState } from "react"
 
 export const metadata = {
-    title: '.: Halaman Utama | Penghargaan Bhakti Karya Husada :.',
+    title: '.: Dashboard Detail | Penghargaan Bhakti Karya Husada :.',
     description: 'Aplikasi Penghargaan Bhakti Karya Husada',
     developer: 'sgt.wibowo@gmail.com',
     icons: '/images/favicon.png'
 }
 
 export default function Page() {
-    setCookie('Cookie_NIPBaru', '198809132010122004');
-    return (
-      <div>
+    const [loading, setLoading] = useState(true)
+    setTimeout(() => {
+        setLoading(false)
+    }, 1000);
+    return ((!loading)
+        ? <div>
         {/* <div className="flex w-full font-weight text-2xl text-rose-700 mt-2 mb-4 sm:text-4xl">Selamat Atas Prestasimu ! 🎉</div>
         <div className="bg-rose-300 border-dotted border border-slate-400 rounded-lg px-2 py-2">
-            <div>Penjelasan Bhakti Karya Husada kini Bertransformasi (Infografis)</div>
-            <div>Nampilin Tahapan& Jadwal HOTM (4 tahapan)</div>
+            <div>Bhakti Karya Husada kini Bertransformasi</div>
+            <div>Penjelasan Hero of The Month</div>
+            <div>Penjelasan ASN Berprestasi</div>
+            <div>Nampilin Tahapan & Jadwal HOTM (4 tahapan)</div>
             <div>Nampilin Pemenang BKH Periode-Periode Sebelumnya</div>
         </div> */}
         <div className="flex w-full font-weight text-2xl text-rose-700 mt-2 mb-4 sm:text-4xl">Selamat Atas Prestasimu ! 🎉</div>
@@ -71,5 +79,6 @@ export default function Page() {
                         gambar="/images/photo.png"/>
                 </div>
       </div>
+      : <LoadingScreen/>
     )
 }

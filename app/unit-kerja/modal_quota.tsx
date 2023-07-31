@@ -17,9 +17,9 @@ export default function ModalQuota() {
             <button
                 type="button"
                 onClick={handleClose}
-                className="inline-flex items-center align-middle rounded-full bg-cyan-100 ml-2 px-2 py-0 text-[10px] font-semibold text-cyan-900 shadow-xs ring-1 ring-inset ring-cyan-900 hover:bg-cyan-50">
+                className="inline-flex items-center align-middle rounded-md bg-white ml-2 px-2 py-0 text-[10px] font-semibold text-orange-900 shadow-xs ring-1 ring-inset ring-orange-900 hover:bg-orange-300">
                 <InformationCircleIcon
-                    className="text-cyan-900 -ml-0.5 mr-0.5 h-4 w-4"
+                    className="text-orange-900 -ml-0.5 mr-0.5 h-4 w-4"
                     aria-hidden="true"/>
                 Info
             </button>

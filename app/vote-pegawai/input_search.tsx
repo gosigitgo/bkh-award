@@ -8,17 +8,9 @@ import {LoadingScreen} from '../components/loadingscreen'
 import swal from 'sweetalert'
 import PanduanVote from './panduanvote'
 import Pilihan from './pilihan'
+import {DataPeg} from '../global'
 
-type Params = {
-    nama: string,
-    no: number,
-    nip_baru: string,
-    uker: string,
-    nama_jabatan: string,
-    nama_pendidikan: string,
-    foto: string,
-    direktorifoto: string
-}
+
 
 const InputSearch = () => {
     const [searchQuery,
@@ -34,7 +26,7 @@ const InputSearch = () => {
     const [dataPilih,
         setDataPilih] = useState([])
     useEffect(() => {       
-        pegawaiDipilih(String(localStorage.getItem('nip')), "3", "2023").then((result) => {
+        pegawaiDipilih(String(localStorage.getItem('nip')), String(localStorage.getItem('triwulan')), String(localStorage.getItem('tahun'))).then((result) => {
             //console.log({res: result.data[0].nip_baru_dipilih})
             if(result.code=='ERR_NETWORK'){
                 swal("Network Error", "Silahkan Coba Lagi !", "error");
@@ -74,7 +66,7 @@ const InputSearch = () => {
     //console.log({dataPilih: dataPilih})
     const DataPegawaiList = (props : any) => {
         return dataPegawai
-            ?.map((item : Params, i) => (<PegawaiVote
+            ?.map((item : DataPeg, i) => (<PegawaiVote
                 key={i}
                 nama={item.nama}
                 uker={item.nama_jabatan}

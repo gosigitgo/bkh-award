@@ -1,4 +1,4 @@
-import BadgePegawai from './badge_pegawai'
+import Badge from './badge'
 import InputSearch from './input_search' 
 
 export const metadata = {
@@ -11,7 +11,7 @@ export const metadata = {
 export default function Page() {
     return (
         <div>
-            <BadgePegawai/> 
+            <Badge/> 
             <div className="border-dotted rounded-lg items-center">
                 <InputSearch/>
             </div>

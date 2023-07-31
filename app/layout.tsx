@@ -24,7 +24,7 @@ export default function RootLayout({children} : {
             className="h-96 scrollbar scrollbar-w-1 scrollbar-thumb-teal-500 scrollbar-track-lime-100 scrollbar-corner-lime-400"
             lang="id">
             <body className={roboto.className}>
-                <NextTopLoader color="#CCE70B"/> 
+                <NextTopLoader color="#0E7490"/> 
                 <main> 
                         {children}
                      
@@ -36,7 +36,7 @@ export default function RootLayout({children} : {
             className="h-96 scrollbar scrollbar-w-1 scrollbar-thumb-teal-500 scrollbar-track-lime-100 scrollbar-corner-lime-400"
             lang="id">
             <body className={roboto.className}>
-                <NextTopLoader color="#CCE70B"/>
+                <NextTopLoader color="#0E7490"/>
                 <Header/>
                 <header className="bg-slate-100 shadow">
                     <div className="mx-auto max-w-7xl px-3 py-3 sm:px-6 lg:px-8">

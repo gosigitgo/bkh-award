@@ -2,8 +2,9 @@ import {Fragment, useState} from 'react'
 import {Dialog, Transition} from '@headlessui/react'
 import {XMarkIcon, UserCircleIcon, CheckCircleIcon} from '@heroicons/react/24/outline'
 import {StarIcon} from "@heroicons/react/24/solid";
-import Image from 'next/image'
+import {detailVote} from '../api/pegawai'
 import swal from 'sweetalert'
+import {checkList, DataPeg} from '../global' 
 
 function classNames(...classes : any[]) {
     return classes
@@ -17,22 +18,23 @@ type Params = {
     vote: number
 }
 
-function LabelSifat(param : Params) {
+function LabelSifat(props:any) {
     return (
         <div>
             <div className="flex">
-                <div className="flex-none w-8 h-8">
-                    -
+                <div className="flex-none w-8 h-7 text-sm">
+                    {props.nourut+1}.
                 </div>
-                <div className="grow h-2">
-                {param.label}
+                <div className="grow h-2 text-sm">
+                    {props.label}
                 </div>
                 <div className="flex-none w-14">
-                    <span title={param.label}
+                    <span
+                        title={props.label}
                         className="inline-flex items-center px-2 py-1 bg-green-200 hover:bg-green-300 rounded-full text-xs font-semibold text-green-600">
                         <StarIcon className="text-blue h-4 w-4"/>
                         <span className="ml-1 text-blue text-xs">
-                            {param.vote}
+                            {props.vote}{props.jml_v}
                         </span>
                     </span>
 
@@ -43,73 +45,52 @@ function LabelSifat(param : Params) {
     )
 }
 
-export default function ModalDetailPegawai() {
-    const checkList = [
-        {
-            key: 1,
-            sifat: 'Suka Menolong (helpful)',
-            vote: 76
-        }, {
-            key: 2,
-            sifat: 'Bersemangat dan cekatan',
-            vote: 52
-        }, {
-            key: 3,
-            sifat: 'Datang tepat waktu',
-            vote: 89
-        }, {
-            key: 4,
-            sifat: 'Tidak melakukan perbuatan tercela',
-            vote: 43
-        }, {
-            key: 5,
-            sifat: 'Mampu melaksanakan tugas sesuai arahan pimpinan',
-            vote: 65
-        }, {
-            key: 6,
-            sifat: 'Suka berbagi pengetahuan (sharing knowledge)',
-            vote: 102
-        }, {
-            key: 7,
-            sifat: 'Tidak memberikan pengaruh buruk',
-            vote: 49
-        }, {
-            key: 8,
-            sifat: 'Tidak mengeluh terhadap beban tugas',
-            vote: 56
-        }, {
-            key: 9,
-            sifat: 'Mampu bekerja sama dalam tim',
-            vote: 49
-        }, {
-            key: 10,
-            sifat: 'Ramah',
-            vote: 40
-        }
-    ]
-
-    checkList.sort((a, b) => (a.vote < b.vote) ? 1 : -1)
-
+export default function DetailPegawaiTemp(props:any) {
 
     const [open,
         setOpen] = useState(false)
+    const [dataPeg,
+        setDataPeg] = useState([] as unknown)
+    const [checkListFill,
+        setCheckListFill] = useState<any[]>([])
 
     function handleClose() {
         setOpen(!open)
-    }
-    function handleVote() {
-        setOpen(!open)
-        swal("Terima Kasih", "Pilihan Anda sudah kami Simpan.", "success");
-    }
+        setCheckListFill([])
+        if (!open) {
+            //console.log('masuk')
+            detailVote(props.nip_baru, props.triwulan, props.tahun).then((result) => {
+                //console.log({res: result.data[0]}) 
+                if (result.code == 'ERR_NETWORK') {
+                    swal("Network Error", "Silahkan Coba Lagi !", "error");
+                } else if (result.result == "true") {
+                    setDataPeg(result.data[0])
+                    //setCheckListFill([]) 
+                    checkList.map((item, i) => (setCheckListFill(checkListFill => [...checkListFill, { id: i, label: item.label, jmlvote: result.data[0][`jml_${item.val}`]}])));
+                    //console.log({detailPeg: result.data})
+                    console.log({checkListFill: checkListFill})
+                    //setLoadingScreen(false)
+                } else {
+                    setDataPeg([]);
+                    //setLoadingScreen(false)
+                }
+            }).catch((err : any) => {
+                return err;
+            })
+        } else {
+            return []
+        }
+    } 
+    checkListFill.sort((a, b) => (Number(a.jmlvote) < Number(b.jmlvote)) ? 1 : -1)
     return (
         <div>
-            <div className="px-3 pb-2 items-center">
+            <div className=''>
                 <button
                     type="button"
                     onClick={handleClose}
-                    className="flex w-full justify-center text-cyan-900 bg-cyan-600 text-white rounded-md border border-solid border-cyan-900 px-3 py-1.5 text-sm font-semibold leading-6 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 hover:text-slate-100 hover:bg-cyan-700">
-                    <CheckCircleIcon className="h-6 w-6 pr-1"/>
-                    <span>Pilih Pegawai</span>
+                    className="inline-flex items-center px-2 py-1 bg-cyan-700 hover:bg-cyan-800 rounded-lg text-xs font-semibold text-white">
+                    <CheckCircleIcon className="flex-none h-6 w-6 pr-1 align-middle"/>
+                    <span>Detail</span>
                 </button>
             </div>
 
@@ -144,7 +125,7 @@ export default function ModalDetailPegawai() {
                                         className="relative w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
                                         <button
                                             type="button"
-                                            className="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8"
+                                            className="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-6 md:right-6 md:top-6 lg:right-8 lg:top-5"
                                             onClick={() => setOpen(false)}>
                                             <span className="sr-only">Close</span>
                                             <XMarkIcon
@@ -152,47 +133,44 @@ export default function ModalDetailPegawai() {
                                                 aria-hidden="true"/>
                                         </button>
                                         <div className="flex w-full pb-2">
-                                            <div className="absolute top-4 mt-0 sm:top-4 md:top-6 lg:top-4">
-                                                <p className='text-red-900 text-lg'>
+                                            <div className="absolute top-4 mt-0 sm:top-4 md:top-6 lg:top-5">
+                                                <p className='text-black text-lg'>
                                                     <strong>DETAIL PEGAWAI</strong>
                                                 </p>
                                             </div>
                                             <div className="flex w-full sm:mt-7">
                                                 <div className="mr-3">
-                                                    <Image
-                                                        src='/images/1.png'
-                                                        width={160}
-                                                        height={160}
-                                                        alt="No Photo"
-                                                        className="object-cover min-w-24 min-h-24 mt-1 border border-solid border-x-grey-400 rounded-2xl border-1 shadow-lg "/>
+                                                    <img
+                                                        src={`${dataPeg
+                                                        ?.direktorifoto}${dataPeg
+                                                            ?.foto}`}
+                                                        width='120'
+                                                        height='140'
+                                                        alt={dataPeg
+                                                        ?.nama}
+                                                        className="object-cover min-w-24 min-h-24 mt-1 border border-solid border-x-grey-400 rounded-2xl border-1 shadow-lg"/>
                                                 </div>
                                                 <div className='w-full mt-1'>
                                                     <div className="grid grid-cols-1 gap-y-0">
-                                                        <p className="flex w-full text-sm font-bold text-gray-900">Kaivan Akhtar Rafaeyza</p>
-                                                        <p className="flex w-full text-sm text-gray-900">198702112010121004</p>
-                                                        <p className="flex w-full text-sm text-gray-900">Penata Tk.I - III/b</p>
-                                                        <p className="flex w-full text-sm text-gray-900">Pranata Komputer Ahli Pertama</p>
+                                                        <p className="flex w-full text-sm font-bold text-gray-900">{dataPeg
+                                                                ?.nama}</p>
+                                                        <p className="flex w-full text-sm text-gray-900">{dataPeg
+                                                                ?.nip_baru}</p>
+                                                        <p className="flex w-full text-sm text-gray-900">{`${dataPeg
+                                                                ?.kepangkatan} - ${dataPeg
+                                                                    ?.nama_golongan}`}</p>
+                                                        <p className="flex w-full text-sm text-gray-900">{dataPeg
+                                                                ?.nama_jabatan}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="flex w-full border-t border-gray-200">
-                                            <p className='font-bold my-1 text-cyan-900'>Sifat Ber<strong>AKHLAK</strong>
-                                                Pegawai
+                                            <p className='font-bold my-1 text-cyan-900'>Sifat Ber<strong>AKHLAK</strong>{` Pegawai`}
                                             </p>
                                         </div>
                                         <div className="border-t border-gray-100 pt-3">
-                                            {checkList.map((item) => (<LabelSifat
-                                                key={item.key}
-                                                nourut={item.key}
-                                                label={item.sifat}
-                                                vote={item.vote}/>))}
-                                        </div>
-                                        <div
-                                            className="flex mt-8 cursor-pointer bg-indigo-600 text-white items-center py-2 rounded-lg justify-center border border-gray-900 border-solid hover:bg-indigo-700"
-                                            onClick={handleVote}>
-                                            <CheckCircleIcon className='font-bold h-6 w-6 pr-1'/>
-                                            <span className="">PILIH</span>
+                                            {checkListFill.map((item, key) => (<LabelSifat key={key} nourut={key} label={item.label} vote={item.jmlvote} />))}
                                         </div>
                                     </div>
                                 </Dialog.Panel>

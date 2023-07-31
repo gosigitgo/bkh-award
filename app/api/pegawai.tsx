@@ -53,6 +53,23 @@ export const pegawaiDipilih = async(nip_baru : string, triwulan : string, tahun 
 
 }
 
+export const detailVote = async(nip_baru : string, triwulan : string, tahun : string) => {
+    //console.log({nipbaru: nip_baru})
+    let postData = new FormData();
+    postData.append('nip_baru', nip_baru);
+    postData.append('tw', triwulan);
+    postData.append('thn', tahun);
+    try {
+        const pegawai = await axios.post(`${APIUrl}/detail_vote`, postData, {timeout: 5000})
+        //console.log({pegawaiList: pegawai})
+        return pegawai.data;
+    } catch (err) {
+        console.log('Error', err);
+        return err
+    }
+
+}
+
 export const savePilihan = async(nip_baru : string, nip_dipilih : string, triwulan : string, tahun : string, v1 : boolean, v2 : boolean, v3 : boolean, v4 : boolean, v5 : boolean, v6 : boolean, v7 : boolean, v8 : boolean, v9 : boolean, v10 : boolean) => {
     //console.log({nipbaru: nip_baru})
     let postData = new FormData();
@@ -80,6 +97,42 @@ export const savePilihan = async(nip_baru : string, nip_dipilih : string, triwul
     } 
 }
 
+export const saveJustifikasi = async(nip_baru : string, triwulan : string, tahun : string, kd_satker : string, justifikasi : string) => {
+    //console.log({nipbaru: nip_baru})
+    let postData = new FormData();
+    postData.append('nip_baru', nip_baru); 
+    postData.append('tw', triwulan);
+    postData.append('thn', tahun);
+    postData.append('kd_satker', kd_satker);
+    postData.append('justifikasi', justifikasi);
+    try {
+        const pegawai = await axios.post(`${APIUrl}/hotm_simpan_justifikasi`, postData, {timeout: 5000})
+        console.log({saveJust: pegawai.data})
+        return pegawai.data;
+    } catch (err) {
+        console.log('Error', err);
+        return err
+    } 
+}
+
+export const saveJustifikasiFinal = async(nip_baru : string, triwulan : string, tahun : string, kd_satker : string, justifikasi : string) => {
+    //console.log({nipbaru: nip_baru})
+    let postData = new FormData();
+    postData.append('nip_baru', nip_baru); 
+    postData.append('tw', triwulan);
+    postData.append('thn', tahun);
+    postData.append('kd_satker', kd_satker);
+    postData.append('justifikasi', justifikasi);
+    try {
+        const pegawai = await axios.post(`${APIUrl}/hotm_simpan_justifikasi_final`, postData, {timeout: 5000})
+        console.log({saveJust: pegawai.data})
+        return pegawai.data;
+    } catch (err) {
+        console.log('Error', err);
+        return err
+    } 
+}
+
 export const hapusPilihan = async(id : string) => {
     //console.log({nipbaru: nip_baru})
     let postData = new FormData();
@@ -92,4 +145,38 @@ export const hapusPilihan = async(id : string) => {
         console.log('Error', err);
         return err
     } 
+}
+
+export const listVote = async(kd_satker : string, triwulan : string, tahun : string) => {
+    //console.log({nipbaru: nip_baru})
+    let postData = new FormData();
+    postData.append('kd_satker', kd_satker);
+    postData.append('tw', triwulan);
+    postData.append('thn', tahun);
+    try {
+        const pegawai = await axios.post(`${APIUrl}/list_vote`, postData, {timeout: 5000})
+        //console.log({pegawaiList: pegawai})
+        return pegawai.data;
+    } catch (err) {
+        console.log('Error', err);
+        return err
+    }
+
+}
+
+export const listVoteFinal = async(kd_satker : string, triwulan : string, tahun : string) => {
+    //console.log({nipbaru: nip_baru})
+    let postData = new FormData();
+    postData.append('kd_satker', kd_satker);
+    postData.append('tw', triwulan);
+    postData.append('thn', tahun);
+    try {
+        const pegawai = await axios.post(`${APIUrl}/list_vote_final`, postData, {timeout: 5000})
+        //console.log({pegawaiList: pegawai})
+        return pegawai.data;
+    } catch (err) {
+        console.log('Error', err);
+        return err
+    }
+
 }

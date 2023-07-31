@@ -16,7 +16,8 @@ const SignIn = () => {
             localStorage.setItem('triwulan', "3")
             localStorage.setItem('tahun', "2023")
             localStorage.setItem('kdsatker', "720104000000")
-            router.push("/vote-pegawai")
+            localStorage.setItem('kuotahotm', "3")
+            router.push("/")
         }else {
             swal('Login Gagal!', 'Username atau password Anda salah', 'error')
         }

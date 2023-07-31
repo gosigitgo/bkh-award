@@ -87,26 +87,16 @@ export default function Pilihan(props : any) {
           })
     }
     
-    const [detPegawai,
-        setDetailPegawai] = useState([]);
-    useEffect(() => {
-        detailPegawai(props.dataPilih[0].nip_baru_dipilih).then((result) => {
-            setDetailPegawai(result.data)
-        }).catch((e) => {
-            console.log(e)
-        });
-    }, [props.dataPilih])
 
     return (
-        <div className="flex place-items-center justify-center">
+        <div className="flex place-items-center justify-center mb-3">
             <div
                 className="place-items-center rounded-lg mt-10 p-2 border-dotted border border-cyan-600 w-full md:w-5/6 sm:w-5/6">
                 <div className='place-items-center text-lg text-cyan-800 font-bold text-center'>ANDA TELAH MEMILIH HERO OF THE MONTH PERIODE III (JULI - SEPTEMBER) TAHUN 2023</div>
                 <div className="place-items-center">
                     <div className='flex gap-2'>
-                        <div className='flex-none w-3/12'>{detPegawai
-                                ?.map((peg : Pegawai, i) => (
-                                    <div key={i} className="flex flex-col">
+                        <div className='flex-none w-3/12'>
+                                    <div className="flex flex-col">
                                         <div className="flex w-full items-center justify-center mb-2">
                                             <div
                                                 className="-z-10 relative mt-3 w-32 h-32 border border-solid border-x-grey-400 rounded-2xl border-1 shadow">
@@ -117,27 +107,27 @@ export default function Pilihan(props : any) {
                         alt="No Photo"
                         className="object-cover w-32 h-32 rounded-2xl"/> */}
                                                 <img
-                                                    src={`${peg.direktorifoto}${peg.foto}`}
+                                                    src={`${props.dataPilih[0].direktorifoto}${props.dataPilih[0].foto}`}
                                                     width='120'
                                                     height='140'
                                                     alt='no-image'
                                                     className="object-cover w-32 h-32 rounded-2xl"/>
                                             </div>
                                         </div>
-                                        <div className="font-bold text-center text-sm xs:text-xs">{peg.nama}</div>
-                                        <div className="text-center text-xs xs:text-xs">{peg.nip_baru}</div>
-                                        <div className="text-center text-xs truncate xs:text-sm h-4 px-2">{peg.kepangkatan}</div>
-                                        <div className="text-center text-xs truncate xs:text-sm h-4 px-2">{peg.nama_jabatan}</div>
+                                        <div className="font-bold text-center text-sm xs:text-xs">{props.dataPilih[0].nama}</div>
+                                        <div className="text-center text-xs xs:text-xs">{props.dataPilih[0].nip_baru}</div>
+                                        <div className="text-center text-xs truncate xs:text-sm h-4 px-2">{props.dataPilih[0].kepangkatan}</div>
+                                        <div className="text-center text-xs truncate xs:text-sm h-4 px-2">{props.dataPilih[0].nama_jabatan}</div>
 
                                     </div>
-                                ))}</div>
+                                </div>
                         <div className='grow w-9/12 items-center justify-center'>
                             <div className='font-bold text-sm pb-2 pt-3'>Penilaian Anda:</div>
                             <div className='grid justify-center grid-cols-2 gap-1'>{checkList.map((item, index) => (
                                     <div className="flex" key={index}>
                                         <div className="flex-none w-6 h-6">
                                             {searchPilih(item.val)
-                                                ? <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                ? <svg viewBox="2 2 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                                         <g id="SVGRepo_iconCarrier">

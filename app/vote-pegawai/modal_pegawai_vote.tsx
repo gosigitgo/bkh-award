@@ -102,7 +102,7 @@ export default function ModalPegawaiVote(props : any) {
         if((Number(pilihV1) + Number(pilihV2) + Number(pilihV3) + Number(pilihV4) + Number(pilihV5) + Number(pilihV6) + Number(pilihV7) + Number(pilihV8) + Number(pilihV9) + Number(pilihV10)) < 3) {
             swal("Gagal!", "Silahkan pilih minimal 3 (tiga) perilaku BerAKHLAK", "error");
         } else {
-            const resp = savePilihan(pilihNIP, pilihNIPPeg, pilihTw, pilihTahun, pilihV1, pilihV2, pilihV3, pilihV4, pilihV5, pilihV6, pilihV7, pilihV8, pilihV9, pilihV10).then((result) => {
+            savePilihan(pilihNIP, pilihNIPPeg, pilihTw, pilihTahun, pilihV1, pilihV2, pilihV3, pilihV4, pilihV5, pilihV6, pilihV7, pilihV8, pilihV9, pilihV10).then((result) => {
                 //console.log({res: result.data[0].nip_baru_dipilih})
                 if(result.code=='ERR_NETWORK'){
                     swal("Network Error", "Silahkan Coba Lagi !", "error");
