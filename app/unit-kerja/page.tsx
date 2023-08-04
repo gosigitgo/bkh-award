@@ -13,7 +13,7 @@ export const metadata = {
 }
 
 export default function Page() {
-    const tempSchedule = true;
+    const tempSchedule = false;
     return (
         <div>
             <Badge/>

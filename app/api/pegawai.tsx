@@ -11,6 +11,26 @@ export const getPegawaiList = async(kdsatker : string) => {
     }
 }
 
+export const getPegawaiListInspiringLeader = async(kdsatker : string) => {
+    try {
+        const pegawai = await axios.get(`${APIUrl}/list_pegawai_inspiring_leader?kdsatker=${kdsatker}`, {timeout: 5000})
+        return pegawai.data
+    } catch (err) {
+        console.log('Error', err);
+        return err
+    }
+}
+
+export const getPegawaiListFutureLeader = async(kdsatker : string) => {
+    try {
+        const pegawai = await axios.get(`${APIUrl}/list_pegawai_future_leader?kdsatker=${kdsatker}`, {timeout: 5000})
+        return pegawai.data
+    } catch (err) {
+        console.log('Error', err);
+        return err
+    }
+}
+
 export const searchPegawai = async(kdsatker : string, q : string) => {
     try {
         const pegawai = await axios.get(`${APIUrl}/list_pegawai?kdsatker=${kdsatker}&q=${q}`, {timeout: 5000})
@@ -20,6 +40,28 @@ export const searchPegawai = async(kdsatker : string, q : string) => {
         return err
     }
 }
+
+export const searchPegawaiInspiringLeader = async(kdsatker : string, q : string) => {
+    try {
+        const pegawai = await axios.get(`${APIUrl}/list_pegawai_inspiring_leader?kdsatker=${kdsatker}&q=${q}`, {timeout: 5000})
+        return pegawai.data
+    } catch (err) {
+        console.log('Error', err);
+        return err
+    }
+}
+
+export const searchPegawaiFutureLeader = async(kdsatker : string, q : string) => {
+    try {
+        const pegawai = await axios.get(`${APIUrl}/list_pegawai_future_leader?kdsatker=${kdsatker}&q=${q}`, {timeout: 5000})
+        return pegawai.data
+    } catch (err) {
+        console.log('Error', err);
+        return err
+    }
+}
+
+
 
 export const detailPegawai = async(nip_baru : string) => {
     //console.log({nipbaru: nip_baru})

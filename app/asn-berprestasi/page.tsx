@@ -1,6 +1,5 @@
-import Badge from "./badge";
-import Stepper from "./stepper";
-import PilihJenis from "./pilih_jenis";
+import Badge from "./badge"; 
+import Daftar from "./button_daftar";
 
 export const metadata = {
     title: '.: ASN Berprestasi | Penghargaan Bhakti Karya Husada :.',
@@ -12,9 +11,8 @@ export const metadata = {
 export default function Page() {
     return (
         <div>
-            <Badge />
-            <Stepper />
-            <PilihJenis />
+            <Badge /> 
+            <Daftar/>
         </div>
     )
 }
