@@ -66,7 +66,7 @@ export default function DetailPegawaiFinal(params : any) {
         }).catch((err : any) => {
             return err;
         })
-    }, [])
+    }, [detailpeg.nip, detailpeg.tahun, detailpeg.triwulan])
     //console.log({menang:menang})
     // checkListFill.sort((a, b) => (a.vote < b.vote)     ? 1     : -1)
     const colorWin = (menang === "1")

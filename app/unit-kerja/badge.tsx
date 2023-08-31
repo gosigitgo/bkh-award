@@ -26,7 +26,7 @@ export default function Badge() {
                         <UsersIcon
                             className="mr-1.5 h-5 w-5 flex-shrink-0 text-grey-400"
                             aria-hidden="true"/>
-                        Kandidat:&nbsp;<b>{localStorage.getItem('kuotahotm')} pegawai</b>
+                        Kandidat:&nbsp;<b>{3} pegawai</b>
                         <ModalQuota/>
                     </div>
                 </div>

@@ -1,6 +1,18 @@
 import axios from "axios"
 import {APIUrl} from '../global'
 
+
+export const getPeriode = async() => {
+    try {
+        const periode = await axios.get(`${APIUrl}/periode_aktif`)
+        console.log({periode:periode})
+        return periode.data
+    } catch (err) {
+        console.log('Errorsss', err);
+        return err
+    }
+}
+
 export const getPegawaiList = async(kdsatker : string) => {
     try {
         const pegawai = await axios.get(`${APIUrl}/list_pegawai?kdsatker=${kdsatker}`, {timeout: 5000})
@@ -131,7 +143,7 @@ export const savePilihan = async(nip_baru : string, nip_dipilih : string, triwul
     postData.append('v10', String(Number(v10)));
     try {
         const pegawai = await axios.post(`${APIUrl}/hotm_simpan`, postData, {timeout: 5000})
-        console.log({savePeg: pegawai.data})
+        //console.log({savePeg: pegawai.data})
         return pegawai.data;
     } catch (err) {
         console.log('Error', err);
@@ -167,7 +179,7 @@ export const saveJustifikasiFinal = async(nip_baru : string, triwulan : string, 
     postData.append('justifikasi', justifikasi);
     try {
         const pegawai = await axios.post(`${APIUrl}/hotm_simpan_justifikasi_final`, postData, {timeout: 5000})
-        console.log({saveJust: pegawai.data})
+        //console.log({saveJust: pegawai.data})
         return pegawai.data;
     } catch (err) {
         console.log('Error', err);

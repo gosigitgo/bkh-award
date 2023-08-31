@@ -1,38 +1,58 @@
 "use client"
 
 import Link from 'next/link'
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import Image from 'next/image'
 import { navigations } from '../global'
-import {useRouter} from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import { NextResponse } from 'next/server'   
+
+
 
 
 function classNames(...classes: any[]) {
   const ret = classes.filter(Boolean).join(' ')
   return ret
 }
-type Links = {
-  id: number, 
-  href: string, 
-  name: string, 
-}
-
-type Params = {
-  selected: string,
-}
 
 
-export default function Header() {
+// export const getServerSideProps = withSessionSsr(
+//   async function getServerSideProps(req:any ) {
+//     const user = req.session?.user;
+
+//     if (user?.login_status !== true) {
+//       return {
+//         notFound: true,
+//       };
+//     }
+
+//     return {
+//       props: {
+//         user: req.session?.user,
+//       },
+//     };
+//   },
+// );
+
+export default async function Header() {
+  //const res = NextResponse.next
+  //setCookie('nip','19191919191')
+  //const myStoreState = useStore(myStore) 
+  const [nip, setNip] = useState('')
+  //const nipstore = usePegawaiStore(state => state.nip) 
   const router = useRouter()
   const activeSegment = useSelectedLayoutSegment()
+ 
+
   function handleLogout(){
-    localStorage.removeItem('nip')
-    localStorage.clear()
-    router.push('/login')
+    //cookies.delete('nip')
+    NextResponse.redirect('https://portal-eoffice.kemkes.go.id/dashboard')
   }
+
+  //console.log({nipnya:nip})
   return (
     <div className="min-h-full sticky top-0 right-0 left-0 z-10">
     <Disclosure as="nav" className="top-0 bg-[#07A9A2]">
@@ -111,7 +131,7 @@ export default function Header() {
                             href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            <span className="font-bold block">{String(localStorage.getItem('nip'))}</span>
+                            <span className="font-bold block">{nip}</span>
                             <span className="block text-lime-900">Biro Organisasi dan SDM</span>
                           </a>
                         )}

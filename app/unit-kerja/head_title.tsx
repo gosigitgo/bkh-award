@@ -7,9 +7,7 @@ import swal from 'sweetalert'
 
 export default function HeadTitle(props : any) {
     function BelumWaktunya() {
-        swal("In Coming", "Pemilihan Akhir akan dibuka setelah periode vote pegawai selesai (30 November 20" +
-                "23)",
-        "info");
+        swal("In Coming", "Pemilihan Akhir akan dibuka setelah periode Bote HoTM Pegawai selesai (30 November 2023)", "info");
     }
     const [temp,
         setTemp] = useState(props.temp)

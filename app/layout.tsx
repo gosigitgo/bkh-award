@@ -1,6 +1,6 @@
 'use client'
 
-import './globals.css'
+import './globals.css' 
 import NextTopLoader from 'nextjs-toploader'
 import {Roboto} from 'next/font/google'
 import Header from './components/header'
@@ -8,8 +8,8 @@ import {useSelectedLayoutSegment} from 'next/navigation'
 import Footer from './components/footer'
 import { navigations } from './global'
 
-
 const roboto = Roboto({weight: '400', subsets: ['latin'], display: 'swap'})
+
 
 export default function RootLayout({children} : {
     children: React.ReactNode;

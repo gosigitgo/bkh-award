@@ -3,17 +3,19 @@ const APIUrl = 'https://api-ropeg.kemkes.go.id/bkhaward'
 const navigations = [
     {
         key: 1,
-        name: 'Vote Pegawai',
+        name: 'Vote HoTM',
         title: 'BKH Award > Hero of The Month',
         href: '/vote-pegawai',
         targetSegment: 'vote-pegawai'
-    }, {
-        key: 2,
-        name: 'Pemilihan Unit Kerja',
-        title: 'Pemilihan di Tingkat Unit Kerja',
-        href: '/unit-kerja',
-        targetSegment: 'unit-kerja'
-    }, {
+    }, 
+    //{
+    //     key: 2,
+    //     name: 'Pemilihan HoTM Unit Kerja',
+    //     title: 'Pemilihan di Tingkat Unit Kerja',
+    //     href: '/unit-kerja',
+    //     targetSegment: 'unit-kerja'
+    // }, 
+    {
         key: 3,
         name: 'ASN Berprestasi',
         title: 'BKH Award > ASN Berprestasi',

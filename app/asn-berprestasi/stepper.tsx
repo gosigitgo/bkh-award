@@ -14,7 +14,7 @@ export default function Stepper(props:any) {
         }else if(props.step===3){
             setPilih3("red")
         } 
-    }, [])
+    }, [props.step])
     
     
     return (

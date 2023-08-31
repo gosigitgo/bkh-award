@@ -61,7 +61,7 @@ export default function ModalPilihHotm(props : any) {
     }
 
     useEffect(() => {
-        listVoteFinal(String(localStorage.getItem('kdsatker')), String(localStorage.getItem('triwulan')), String(localStorage.getItem('tahun'))).then((result) => {
+        listVoteFinal('7200000', '3', '2023').then((result) => {
             //console.log({res: result.data[0].nip_baru_dipilih})
             if (result.code == 'ERR_NETWORK') {
                 swal("Network Error", "Silahkan Coba Lagi !", "error");

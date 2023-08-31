@@ -18,10 +18,7 @@ export default function Page() {
         <div>
             <Stepper step={1} />
             <PilihJenis chgPilih={setPilih} />
-            {
-            (pilih !== null)
-            ? <Pilih />
-            :""}
+            <Pilih />
         </div>
     )
 }

@@ -250,6 +250,24 @@ export default function ModalIsi(props : any) {
                                                 rows={3}
                                             />
                                         </div>
+                                        <div>
+                                            <div className="mb-2 block">
+                                                <Label htmlFor="small" value="6. Rekomendasi Pimpinan"/>
+                                            </div>
+                                            <input type='file' />
+                                        </div>
+                                        <div>
+                                            <div className="mb-2 block">
+                                                <Label htmlFor="small" value="7. Ringkasan Prestasi"/>
+                                            </div>
+                                            <input type='file' />
+                                        </div>
+                                        <div>
+                                            <div className="mb-2 block">
+                                                <Label htmlFor="small" value="8. Surat Pernyataan Bebas Hukuman Disiplin"/>
+                                            </div>
+                                            <input type='file' />
+                                        </div>
                                         <div
                                             className="flex mt-8 cursor-pointer bg-cyan-600 text-white items-center py-2 rounded-lg justify-center border border-cyan-900 border-solid hover:bg-cyan-700"
                                             onClick={handleSave}>

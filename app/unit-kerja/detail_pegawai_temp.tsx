@@ -4,7 +4,7 @@ import {XMarkIcon, UserCircleIcon, CheckCircleIcon} from '@heroicons/react/24/ou
 import {StarIcon} from "@heroicons/react/24/solid";
 import {detailVote} from '../api/pegawai'
 import swal from 'sweetalert'
-import {checkList, DataPeg} from '../global' 
+import {checkList, DataPeg} from '../global'
 
 function classNames(...classes : any[]) {
     return classes
@@ -12,10 +12,21 @@ function classNames(...classes : any[]) {
         .join(' ')
 }
 
+
 type Params = {
     nourut: number,
     label: string,
     vote: number
+}
+
+type iDataPeg = {
+    direktorifoto : string, 
+    foto: string,
+    nama: string,
+    nip_baru: string,
+    kepangkatan: string,
+    nama_golongan: string, 
+    nama_jabatan: string,
 }
 
 function LabelSifat(props:any) {
@@ -45,12 +56,13 @@ function LabelSifat(props:any) {
     )
 }
 
+
 export default function DetailPegawaiTemp(props:any) {
 
     const [open,
         setOpen] = useState(false)
     const [dataPeg,
-        setDataPeg] = useState([] as unknown)
+        setDataPeg] = useState<iDataPeg>()
     const [checkListFill,
         setCheckListFill] = useState<any[]>([])
 
@@ -71,7 +83,7 @@ export default function DetailPegawaiTemp(props:any) {
                     console.log({checkListFill: checkListFill})
                     //setLoadingScreen(false)
                 } else {
-                    setDataPeg([]);
+                    //setDataPeg();
                     //setLoadingScreen(false)
                 }
             }).catch((err : any) => {
@@ -141,9 +153,7 @@ export default function DetailPegawaiTemp(props:any) {
                                             <div className="flex w-full sm:mt-7">
                                                 <div className="mr-3">
                                                     <img
-                                                        src={`${dataPeg
-                                                        ?.direktorifoto}${dataPeg
-                                                            ?.foto}`}
+                                                        src={`${dataPeg?.direktorifoto}${dataPeg?.foto}`}
                                                         width='120'
                                                         height='140'
                                                         alt={dataPeg

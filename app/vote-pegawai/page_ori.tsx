@@ -1,8 +1,8 @@
-import BadgeComingsoon from './badge_comingsoon'
+import Badge from './badge'
 import InputSearch from './input_search' 
 
 export const metadata = {
-    title: '.: Hero of The Month | Penghargaan Bhakti Karya Husada :.',
+    title: '.: Vote Pegawai | Penghargaan Bhakti Karya Husada :.',
     description: 'Aplikasi Penghargaan Bhakti Karya Husada',
     developer: 'sgt.wibowo@gmail.com',
     icons: '/images/favicon.png'
@@ -11,7 +11,10 @@ export const metadata = {
 export default function Page() {
     return (
         <div>
-            <BadgeComingsoon/> 
+            <Badge/> 
+            <div className="border-dotted rounded-lg items-center">
+                <InputSearch/>
+            </div>
         </div>
     )
 } 

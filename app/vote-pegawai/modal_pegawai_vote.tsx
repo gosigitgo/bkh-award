@@ -62,11 +62,11 @@ export default function ModalPegawaiVote(props : any) {
     const [pilihNIPPeg,
         setPilihNIPPeg] = useState(props.nip)
     const [pilihNIP,
-        setPilihNIP] = useState(String(localStorage.getItem('nip')))
+        setPilihNIP] = useState('198702112010121004')
     const [pilihTw,
-        setPilihTw] = useState(String(localStorage.getItem('triwulan')))
+        setPilihTw] = useState('3')
     const [pilihTahun,
-        setPilihTahun] = useState(String(localStorage.getItem('tahun')))
+        setPilihTahun] = useState('2023')
     const [pilihV1,
         setPilihV1] = useState(false)
     const [pilihV2,

@@ -1,34 +1,68 @@
 'use client';
 
-import {listVote} from '../api/pegawai'
+import {listVote, detailPegawai} from '../api/pegawai'
 import Image from 'next/image';
 import DetailPegawaiTemp from './detail_pegawai_temp';
 import {useEffect, useState} from 'react';
 import swal from 'sweetalert';
 import {LoadingScreen} from '../components/loadingscreen';
+import axios from 'axios';
+import {useRouter} from 'next/navigation';
+
+const fetchSession = async() => {
+    const res = await axios.get('http://localhost:3000/api/cookies');
+    return res.data
+};
 
 export default function KandidatTemp() {
+    const router = useRouter()
     const [listPeg,
         setListPeg] = useState([])
     const [loadingScreen,
         setLoadingScreen] = useState(true)
     useEffect(() => {
-        listVote(String(localStorage.getItem('kdsatker')), String(localStorage.getItem('triwulan')), String(localStorage.getItem('tahun'))).then((result) => {
-            //console.log({res: result.data[0].nip_baru_dipilih})
-            if (result.code == 'ERR_NETWORK') {
-                swal("Network Error", "Silahkan Coba Lagi !", "error");
-            } else if (result.result == "true") {
-                setListPeg(result.data);
-                console.log({dipilihA: result.data})
+        setTimeout(async() => {
+            fetchSession().then((result) => {
+                console.log({login: result.sess_login})
+                if (result.sess_login === true) {
+                    detailPegawai(result.sess_nip).then((datapeg) => {
+
+                        console.log('m')
+                        console.log({peg: datapeg.data[0]})
+                        listVote(datapeg.data[0].kd_satuan_organisasi, datapeg.data[0].triwulan, datapeg.data[0].tahun).then((result) => {
+                            //console.log({res: result.data[0].nip_baru_dipilih})
+                            if (result.code == 'ERR_NETWORK') {
+                                swal("Network Error", "Silahkan Coba Lagi !", "error");
+                            } else if (result.result == "true") {
+                                setListPeg(result.data);
+                                console.log({dipilihA: result.data})
+                                setLoadingScreen(false)
+                            } else {
+                                setListPeg([]);
+                                setLoadingScreen(false)
+                            }
+                        }).catch(err => {
+                            return err;
+                        });
+                        setLoadingScreen(false)
+                    }).catch((err : Error) => {
+                        console.log({errors: err})
+                        setLoadingScreen(false)
+                    })
+
+                } else {
+                    swal({title: "Error", text: "Session habis, silahkan login ulang!", icon: "warning", timer: 2000})
+                    setLoadingScreen(false)
+                    router.push('http://auth-eoffice.kemkes.go.id/do-login')
+                }
+            }).catch((e : Error) => {
+                console.log({errors: e})
+                swal("Error", "Terjadi Kesalahan. Silahkan login ulang!", 'error')
                 setLoadingScreen(false)
-            } else {
-                setListPeg([]);
-                setLoadingScreen(false)
-            }
-        }).catch(err => {
-            return err;
-        })
-    }, [])
+            })
+        }, 1000);
+    }, [router]);
+
     return ((!loadingScreen)
         ? <div className="w-full">
 

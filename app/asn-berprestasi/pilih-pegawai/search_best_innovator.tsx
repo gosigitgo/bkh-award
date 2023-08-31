@@ -33,7 +33,7 @@ const InputSearch = () => {
             }
             else if (result.result == "true") {
                 setDataPilih(result.data);
-                console.log({dipilihA:result.data})
+                //console.log({dipilihA:result.data})
                 setLoadingScreen(false)
             }else {
                 setDataPilih([]);
