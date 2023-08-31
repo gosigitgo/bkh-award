@@ -12,13 +12,13 @@ import {LoadingScreen} from '../components/loadingscreen'
 import { useRouter } from "next/navigation";
 import {detailPegawai} from "../api/pegawai"
 
-export const metadata = {
-    title: '.: Dashboard | Penghargaan Bhakti Karya Husada :.',
-    description: 'Aplikasi Penghargaan Bhakti Karya Husada',
-    developer: 'sgt.wibowo@gmail.com',
-    icons: '/images/favicon.png'
+// export const metadata = {
+//     title: '.: Dashboard | Penghargaan Bhakti Karya Husada :.',
+//     description: 'Aplikasi Penghargaan Bhakti Karya Husada',
+//     developer: 'sgt.wibowo@gmail.com',
+//     icons: '/images/favicon.png'
 
-}
+// }
 
 function titleCase(str:string) {
     return str
@@ -34,7 +34,7 @@ const fetchSession = async() => {
 
 export default function Dashboard() {
     const router = useRouter()
-    const [nip, setNip] = useState()
+    const [, setNip] = useState()
     const [nama, setNama] = useState()
     const [loadingScreen, setLoadingScreen] = useState(true)
     useEffect(() => {
