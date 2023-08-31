@@ -4,12 +4,12 @@ import PegawaiVotePusat from "./pegawai_vote_pusat"
 import { LoadingScreen } from "../components/loadingscreen"
 import { useState } from "react"
 
-export const metadata = {
-    title: '.: Dashboard Detail | Penghargaan Bhakti Karya Husada :.',
-    description: 'Aplikasi Penghargaan Bhakti Karya Husada',
-    developer: 'sgt.wibowo@gmail.com',
-    icons: '/images/favicon.png'
-}
+// export const metadata = {
+//     title: '.: Dashboard Detail | Penghargaan Bhakti Karya Husada :.',
+//     description: 'Aplikasi Penghargaan Bhakti Karya Husada',
+//     developer: 'sgt.wibowo@gmail.com',
+//     icons: '/images/favicon.png'
+// }
 
 export default function Page() {
     const [loading, setLoading] = useState(true)
