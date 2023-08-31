@@ -42,12 +42,12 @@ export default function Dashboard() {
             fetchSession().then((result) => { 
                 if(result.sess_login === true){
                     detailPegawai(result.sess_nip).then((datapeg) => {
-                        console.log({peg:datapeg.data[0]})
+                        //console.log({peg:datapeg.data[0]})
                         setNip(datapeg.data[0].nip)
                         setNama(datapeg.data[0].nama)
                         setLoadingScreen(false)
                     }).catch((err:Error) => {
-                        console.log({errors:err})
+                        //console.log({errors:err})
                         setLoadingScreen(false)
                     })
                     
@@ -62,7 +62,7 @@ export default function Dashboard() {
                     router.push('http://auth-eoffice.kemkes.go.id/do-login')
                 }
             }).catch((e : Error) => {
-                console.log({errors:e})
+                //console.log({errors:e})
                 swal("Error","Terjadi Kesalahan. Silahkan login ulang!", 'error')
                 setLoadingScreen(false)
             })
@@ -71,15 +71,15 @@ export default function Dashboard() {
     return ((!loadingScreen)
     ?
         <div>
-            <div
+            {/* <div
                 className="flex w-full font-bold text-2xl text-rose-700 mt-2 mb-4 sm:text-4xl">Halo {titleCase(String(nama))}
                 😊</div>
             <div className="relative scrollbar-none">
                 <div
                     className="rounded-3xl relative h-56 overflow-hidden md:h-96 scrollbar-none">
-                    {/* <InfoCarousel/> */}
+                    <InfoCarousel/>
                 </div>
-            </div>
+            </div> */}
             
         </div>
         : <LoadingScreen />
