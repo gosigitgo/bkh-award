@@ -36,42 +36,42 @@ export default function Dashboard() {
     const router = useRouter()
     const [nip, setNip] = useState()
     const [nama, setNama] = useState()
-    const [loadingScreen, setLoadingScreen] = useState(false)
-    // useEffect(() => {
-    //     setTimeout(async() => {
-    //         fetchSession().then((result) => { 
-    //             if(result.sess_login === true){
-    //                 detailPegawai(result.sess_nip).then((datapeg) => {
-    //                     //console.log({peg:datapeg.data[0]})
-    //                     setNip(datapeg.data[0].nip)
-    //                     setNama(datapeg.data[0].nama)
-    //                     setLoadingScreen(false)
-    //                 }).catch((err:Error) => {
-    //                     //console.log({errors:err})
-    //                     setLoadingScreen(false)
-    //                 })
+    const [loadingScreen, setLoadingScreen] = useState(true)
+    useEffect(() => {
+        setTimeout(async() => {
+            fetchSession().then((result) => { 
+                if(result.sess_login === true){
+                    detailPegawai(result.sess_nip).then((datapeg) => {
+                        //console.log({peg:datapeg.data[0]})
+                        setNip(datapeg.data[0].nip)
+                        setNama(datapeg.data[0].nama)
+                        setLoadingScreen(false)
+                    }).catch((err:Error) => {
+                        //console.log({errors:err})
+                        setLoadingScreen(false)
+                    })
                     
-    //             }else {
-    //                 swal({
-    //                     title: "Error",
-    //                     text: "Session habis, silahkan login ulang!",
-    //                     icon: "warning",
-    //                     timer:2000
-    //                 })
-    //                 setLoadingScreen(false)
-    //                 router.push('http://auth-eoffice.kemkes.go.id/do-login')
-    //             }
-    //         }).catch((e : Error) => {
-    //             //console.log({errors:e})
-    //             swal("Error","Terjadi Kesalahan. Silahkan login ulang!", 'error')
-    //             setLoadingScreen(false)
-    //         })
-    //     }, 1000);
-    // }, [router]);
+                }else {
+                    swal({
+                        title: "Error",
+                        text: "Session habis, silahkan login ulang!",
+                        icon: "warning",
+                        timer:2000
+                    })
+                    setLoadingScreen(false)
+                    router.push('http://auth-eoffice.kemkes.go.id/do-login')
+                }
+            }).catch((e : Error) => {
+                //console.log({errors:e})
+                swal("Error","Terjadi Kesalahan. Silahkan login ulang!", 'error')
+                setLoadingScreen(false)
+            })
+        }, 1000);
+    }, [router]);
     return ((!loadingScreen)
     ?
         <div>
-            {/* <div
+            <div
                 className="flex w-full font-bold text-2xl text-rose-700 mt-2 mb-4 sm:text-4xl">Halo {titleCase(String(nama))}
                 😊</div>
             <div className="relative scrollbar-none">
@@ -79,8 +79,12 @@ export default function Dashboard() {
                     className="rounded-3xl relative h-56 overflow-hidden md:h-96 scrollbar-none">
                     <InfoCarousel/>
                 </div>
-            </div> */}
-            
+            </div>
+            <BkhWinner />
+            <InspiringWinner />
+            <FutureWinner />
+            <InnovatorWinner />
+
         </div>
         : <LoadingScreen />
     )
