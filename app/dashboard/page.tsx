@@ -77,7 +77,7 @@ export default function Dashboard() {
             <div className="relative scrollbar-none">
                 <div
                     className="rounded-3xl relative h-56 overflow-hidden md:h-96 scrollbar-none">
-                    <InfoCarousel/>
+                    {/* <InfoCarousel/> */}
                 </div>
             </div>
             
