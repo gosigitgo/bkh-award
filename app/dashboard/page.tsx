@@ -2,7 +2,6 @@
 
 import BkhWinner from "./bkh_winner";
 import axios from "axios";
-import InfoCarousel from "./carousel";
 import swal from "sweetalert";
 import InspiringWinner from "./inspiring_winner";
 import FutureWinner from "./future_winner";
@@ -34,7 +33,7 @@ const fetchSession = async() => {
 
 export default function Dashboard() {
     const router = useRouter()
-    const [, setNip] = useState()
+    const [nip, setNip] = useState()
     const [nama, setNama] = useState()
     const [loadingScreen, setLoadingScreen] = useState(true)
     useEffect(() => {
@@ -77,7 +76,7 @@ export default function Dashboard() {
             <div className="relative scrollbar-none">
                 <div
                     className="rounded-3xl relative h-56 overflow-hidden md:h-96 scrollbar-none">
-                    <InfoCarousel/>
+                    
                 </div>
             </div>
             <BkhWinner/>
