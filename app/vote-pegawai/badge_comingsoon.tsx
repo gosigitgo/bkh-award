@@ -4,7 +4,7 @@ export default function BadgeComingsoon() {
 
     
     return ( 
-            <div className="bg-rose-300 border-l-4 mb-4 rounded-lg border-rose-700 rounded-b text-rose-900 px-4 py-3 shadow-md"
+            <div className="bg-rose-100 border-l-4 mb-4 rounded-lg border-rose-700 rounded-b text-rose-900 px-4 py-3 shadow-md"
                 role="alert">
                 <div className="flex">
                     <div className="hidden py-1 sm:block">

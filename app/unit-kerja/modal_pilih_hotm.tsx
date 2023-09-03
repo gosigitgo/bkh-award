@@ -85,7 +85,7 @@ export default function ModalPilihHotm(props : any) {
         }).catch(err => {
             return err;
         })
-    }, [])
+    }, [justifikasi, pilih])
 
     return ((!loadingScreen)
         ? <div>

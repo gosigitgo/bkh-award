@@ -16,7 +16,7 @@ export default function ModalDownload() {
         <div>
             <div
                 className="py-1 px-2 bg-orange-500 rounded-md text-center font-bold text-white text-sm cursor-pointer hover:bg-orange-600"
-                onClick={handleClose}>DOWNLOAD</div>
+                onClick={handleClose}>DOWNLOAD FORMULIR</div>
 
             <Transition.Root show={open} as={Fragment}>
                 <Dialog

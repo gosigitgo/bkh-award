@@ -1,5 +1,7 @@
 import Image from "next/image"
-export const LoadingScreen = () => {
+
+export const LoadingScreen = (props:any) => {
+    const teks = (props.textLoad)?props.textLoad:'Memproses...'
     return (
         <div>
             <div className="fixed top-0 left-0 w-full h-full bg-white z-40 opacity-100">
@@ -16,7 +18,7 @@ export const LoadingScreen = () => {
                             fill-rule='evenodd'/>
                     </svg> */}
                     <Image src='/images/loading.gif' alt="Loading" height={60} width={60} unoptimized={true} className="bg-white" />
-                    Memproses...
+                    {teks}
                 </div>
             </div>
         </div>

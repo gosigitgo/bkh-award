@@ -131,7 +131,7 @@ export default async function Header() {
                             href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            <span className="font-bold block">{nip}</span>
+                            <span className="font-bold block">XXXX</span>
                             <span className="block text-lime-900">Biro Organisasi dan SDM</span>
                           </a>
                         )}

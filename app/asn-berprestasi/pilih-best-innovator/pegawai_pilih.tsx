@@ -1,9 +1,9 @@
 'use client'
 
-import ModalIsi from "./modal_inspiring_leader";
+import ModalIsi from "./modal_isi";
 
 
-export default function PegawaiVote(params:any) {
+export default function PegawaiPilih(params:any) {
     return (
         <div
             className="flex flex-col shadow-lg rounded-xl border border-dotted border-cyan-900 border-1">
@@ -27,7 +27,7 @@ export default function PegawaiVote(params:any) {
             <div className="font-bold text-center text-sm xs:text-xs">{params.nama}</div>
             <div className="text-center text-xs xs:text-xs">{params.nip}</div>
             <div className="text-center text-xs truncate xs:text-sm h-4 px-2">{params.uker}</div>
-            <ModalIsi nip={params.nip} onInfoChange={params.onInfoChange} info={params.info} />
+            <ModalIsi nip={params.nip} />
         </div>
     );
 }

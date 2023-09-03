@@ -4,10 +4,11 @@ import {Fragment, useState} from 'react'
 import {Dialog, Transition} from '@headlessui/react'
 import { XMarkIcon, CheckCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline' 
 import swal from 'sweetalert'
-import {detailPegawai, savePilihan} from '../../api/pegawai' 
+import {detailPegawai, saveASNBerprestasi} from '../../api/pegawai' 
 import {useRouter} from 'next/navigation'
 import {Label, Textarea } from 'flowbite-react';
- 
+import secureLocalStorage from "react-secure-storage";
+
 type Params = {
     label: string,
     index: number,
@@ -33,70 +34,71 @@ export default function ModalIsi(props : any) {
         setLoading] = useState(false)
     const [detPegawai,
         setDetailPegawai] = useState([])
-    const [pilihNIPPeg,
-        setPilihNIPPeg] = useState(props.nip)
-    const [pilihNIP,
-        setPilihNIP] = useState(String(localStorage.getItem('nip')))
-    const [pilihTw,
-        setPilihTw] = useState(String(localStorage.getItem('triwulan')))
-    const [pilihTahun,
-        setPilihTahun] = useState(String(localStorage.getItem('tahun')))
-    const [pilihV1,
-        setPilihV1] = useState(false)
-    const [pilihV2,
-        setPilihV2] = useState(false)
-    const [pilihV3,
-        setPilihV3] = useState(false)
-    const [pilihV4,
-        setPilihV4] = useState(false)
-    const [pilihV5,
-        setPilihV5] = useState(false)
-    const [pilihV6,
-        setPilihV6] = useState(false)
-    const [pilihV7,
-        setPilihV7] = useState(false)
-    const [pilihV8,
-        setPilihV8] = useState(false)
-    const [pilihV9,
-        setPilihV9] = useState(false)
-    const [pilihV10,
-        setPilihV10] = useState(false)
+    const pilihNIP = props.nip
+    const [dinamika1, setDinamika1] = useState("")
+    const [dinamika2, setDinamika2] = useState("")
+    const [dinamika3, setDinamika3] = useState("")
+    const [dinamika4, setDinamika4] = useState("")
+    const [gaya1, setGaya1] = useState("")
+    const [gaya2, setGaya2] = useState("")
+    const [gaya3, setGaya3] = useState("")
+    const [gaya4, setGaya4] = useState("")
+    const [gaya5, setGaya5] = useState("")
+    const [gaya6, setGaya6] = useState("")
+    const [akhlak, setAkhlak] = useState("")
+    const [dakung, setDakung] = useState("")
 
     function handleModal() {
         setOpen(!open);
         detailPegawai(props.nip).then((result) => {
             setDetailPegawai(result.data)
-            console.log({detailPegawai: detPegawai})
+            //console.log({detailPegawai: detPegawai})
         }).catch(err => {
             return err;
         })
     }
-    function handleSave() : void {
-        if((Number(pilihV1) + Number(pilihV2) + Number(pilihV3) + Number(pilihV4) + Number(pilihV5) + Number(pilihV6) + Number(pilihV7) + Number(pilihV8) + Number(pilihV9) + Number(pilihV10)) < 3) {
-            swal("Gagal!", "Silahkan pilih minimal 3 (tiga) perilaku BerAKHLAK", "error");
-        } else {
-            savePilihan(pilihNIP, pilihNIPPeg, pilihTw, pilihTahun, pilihV1, pilihV2, pilihV3, pilihV4, pilihV5, pilihV6, pilihV7, pilihV8, pilihV9, pilihV10).then((result) => {
-                //console.log({res: result.data[0].nip_baru_dipilih})
-                if (result.code == 'ERR_NETWORK') {
-                    swal("Network Error", "Silahkan Coba Lagi !", "error");
-                } else if (result.result == "true") {
-                    //console.log(resp)
-                    setOpen(!open);
-                    swal("Terima Kasih", "Pilihan Anda sudah kami simpan.", "success");
-                    props.onInfoChange(result)
-                } else {
-                    setOpen(!open);
-                    swal("Terjadi Kesalahan!", "Halaman akan di refresh ulang.", "error");
-                    router.refresh()
-                }
-            }).catch(err => {
-                return err;
-            })
-
-        }
-
+    function handleSave() {
+        swal({
+            title: "Konfirmasi",
+            text: "Apakah data yang Anda masukkan sudah benar ?",
+            icon: "warning",
+            buttons: [
+                'Batal',
+                'Ya'
+            ],
+            dangerMode: true,
+        }).then(function(isConfirm) {
+            if (isConfirm) {
+                saveASNBerprestasi("2", pilihNIP, String(secureLocalStorage.getItem('session_kdsatker')), String(secureLocalStorage.getItem('session_tahun')), dinamika1, dinamika2, dinamika3, dinamika4, gaya1, gaya2, gaya3, gaya4, gaya5, gaya6, akhlak, dakung).then((result) => {
+                    //console.log({res: result.data[0].nip_baru_dipilih})
+                    if (result.code == 'ERR_NETWORK') {
+                        swal("Network Error", "Silahkan Coba Lagi !", "error");
+                    } else if (result.result == "true") {
+                        //console.log(resp)
+                        setOpen(!open);
+                        swal({
+                            title: "Terima Kasih",
+                            text: "Pilihan Anda sudah kami simpan.",
+                            icon: "success",  
+                        }).then(function(isConfirm) {
+                            if (isConfirm) {
+								router.push('/asn-berprestasi/riwayat')
+                            } 
+                        })
+                    } else {
+                        setOpen(!open);
+                        swal("Error", "Terjadi Kesalahan!", "error");
+                        router.push('/asn-berprestasi/pilih-future-leader')
+                    }
+                }).catch(err => {
+                    return err;
+                })
+            } else {
+                return false;
+            }
+        })
     }
- 
+
     return (
         <div>
             <div className="px-3 pb-2 my-3 items-center">
@@ -135,7 +137,8 @@ export default function ModalIsi(props : any) {
                                 leaveFrom="opacity-100 translate-y-0 md:scale-100"
                                 leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95">
                                 <Dialog.Panel
-                                    className="flex w-full transform text-left text-base transition md:my-5 md:max-w-2xl md:px-2 lg:max-w-2xl">
+                                    className="flex w-full transform text-left text-base transition md:my-5 md:max-w-2xl md:px-2 lg:max-w-4xl">
+                                    <form method='post' onSubmit={handleSave}>
                                     <div
                                         className="relative w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
                                         <button
@@ -189,6 +192,7 @@ export default function ModalIsi(props : any) {
                                             </p>
 
                                         </div>
+                                        
                                         <div className='text-sm'>Jelaskan <u><strong>secara singkat</strong></u> prestasi yang telah Anda capai dalam aspek-aspek sebagai berikut:</div>
                                         <div className='text-sm font-bold mt-2'>I. Dinamika Kinerja Unit Utama</div>
                                         <div>
@@ -196,6 +200,8 @@ export default function ModalIsi(props : any) {
                                                 <Label htmlFor="small" value="1. Perkembangan kinerja unit kerja"/>
                                             </div>
                                             <Textarea
+                                                value={dinamika1}
+                                                onChange={({target}) => setDinamika1(target.value)}
                                                 id="comment1"
                                                 className='text-sm'
                                                 placeholder="Jelaskan perkembangan kinerja unit kerja yang Anda pimpin selama 2 tahun terakhir"
@@ -208,6 +214,8 @@ export default function ModalIsi(props : any) {
                                                 <Label htmlFor="small" value="2. Dampak kinerja pada pemangku kepentingan"/>
                                             </div>
                                             <Textarea
+                                                value={dinamika2}
+                                                onChange={({target}) => setDinamika2(target.value)}
                                                 id="comment2"
                                                 className='text-sm'
                                                 placeholder="Jelaskan dampak dari kinerja yang dihasilkan unit kerja yang Anda pimpin pada pemangku kepentingan terkait (termasuk pegawai unit kerja)"
@@ -220,7 +228,9 @@ export default function ModalIsi(props : any) {
                                                 <Label htmlFor="small" value="3. Implementasi rencana unit kerja"/>
                                             </div>
                                             <Textarea
-                                                id="comment2"
+                                                value={dinamika3}
+                                                onChange={({target}) => setDinamika3(target.value)}
+                                                id="comment3"
                                                 className='text-sm'
                                                 placeholder="Jelaskan perkembangan implementasi rencana kerja tahunan/strategis unit kerja yang Anda pimpin, serta sekilas tantangan dalam implementasi tersebut"
                                                 required
@@ -232,6 +242,8 @@ export default function ModalIsi(props : any) {
                                                 <Label htmlFor="small" value="4. Inovasi di dalam kegiatan unit kerja"/>
                                             </div>
                                             <Textarea
+                                                value={dinamika4}
+                                                onChange={({target}) => setDinamika4(target.value)}
                                                 id="comment4"
                                                 className='text-sm'
                                                 placeholder="Jelaskan berbagai inovasi yang telah Anda terapkan di dalam unit kerja yang Anda pimpin"
@@ -245,7 +257,9 @@ export default function ModalIsi(props : any) {
                                                 <Label htmlFor="small" value="1. Komunikasi dan hubungan dengan pemangku kepentingan"/>
                                             </div>
                                             <Textarea
-                                                id="comment1"
+                                                value={gaya1}
+                                                onChange={({target}) => setGaya1(target.value)}
+                                                id="comment5"
                                                 className='text-sm'
                                                 placeholder="Jelaskan kegiatan/mekanisme yang Anda lakukan untuk berkomunikasi dan menjaga hubungan dengan pemangku kepentingan (termasuk pegawai)"
                                                 required
@@ -257,7 +271,9 @@ export default function ModalIsi(props : any) {
                                                 <Label htmlFor="small" value="2. Pengelolaan situasi menekan"/>
                                             </div>
                                             <Textarea
-                                                id="comment2"
+                                                value={gaya2}
+                                                onChange={({target}) => setGaya2(target.value)}
+                                                id="comment6"
                                                 className='text-sm'
                                                 placeholder="Jelaskan hal-hal yang biasa Anda lakukan apabila Anda dan unit kerja yang Anda pimpin sedang berada dalam situasi yang menekan (misal: mendapat beban kerja besar dengan tenggat waktu yang singkat)"
                                                 required
@@ -269,7 +285,9 @@ export default function ModalIsi(props : any) {
                                                 <Label htmlFor="small" value="3. Pengembangan kompetensi individu dan tim"/>
                                             </div>
                                             <Textarea
-                                                id="comment2"
+                                                value={gaya3}
+                                                onChange={({target}) => setGaya3(target.value)}
+                                                id="comment7"
                                                 className='text-sm'
                                                 placeholder="Jelaskan hal-hal yang telah Anda lakukan terkait pengembangan kompetensi berbagai tim kerja dan individu pegawai di unit kerja yang Anda pimpin "
                                                 required
@@ -281,7 +299,9 @@ export default function ModalIsi(props : any) {
                                                 <Label htmlFor="small" value="4. Pencapaian dan kesalahan"/>
                                             </div>
                                             <Textarea
-                                                id="comment4"
+                                                value={gaya4}
+                                                onChange={({target}) => setGaya4(target.value)}
+                                                id="comment8"
                                                 className='text-sm'
                                                 placeholder="Jelaskan hal-hal yang telah Anda lakukan terkait pencapaian atau kesalahan yang dilakukan oleh individu atau tim kerja di unit kerja yang Anda pimpin "
                                                 required
@@ -293,7 +313,9 @@ export default function ModalIsi(props : any) {
                                                 <Label htmlFor="small" value="5. Kebutuhan personal dan work-life balance"/>
                                             </div>
                                             <Textarea
-                                                id="comment4"
+                                                value={gaya5}
+                                                onChange={({target}) => setGaya5(target.value)}
+                                                id="comment9"
                                                 className='text-sm'
                                                 placeholder="Jelaskan hal-hal yang telah Anda lakukan terkait akomodasi kebutuhan personal serta aspek work-life balance para pegawai di unit kerja Anda"
                                                 required
@@ -305,7 +327,9 @@ export default function ModalIsi(props : any) {
                                                 <Label htmlFor="small" value="6. Kedekatan hubungan atasan-bawahan"/>
                                             </div>
                                             <Textarea
-                                                id="comment4"
+                                                value={gaya6}
+                                                onChange={({target}) => setGaya6(target.value)}
+                                                id="comment10"
                                                 className='text-sm'
                                                 placeholder="Jelaskan tingkat kedekatan hubungan Anda dengan para pegawai di unit kerja"
                                                 required
@@ -318,20 +342,39 @@ export default function ModalIsi(props : any) {
                                                 <Label htmlFor="small" value="Internalisasi BerAKHLAK di unit kerja"/>
                                             </div>
                                             <Textarea
-                                                id="comment1"
+                                                value={akhlak}
+                                                onChange={({target}) => setAkhlak(target.value)}
+                                                id="comment11"
                                                 className='text-sm'
                                                 placeholder="Jelaskan hal-hal yang telah Anda lakukan untuk mendorong munculnya perilaku yang selaras dengan BerAKHLAK di unit kerja yang Anda pimpin"
                                                 required
                                                 rows={3}
                                             />
                                         </div>
-                                        <div
-                                            className="flex mt-8 cursor-pointer bg-cyan-600 text-white items-center py-2 rounded-lg justify-center border border-cyan-900 border-solid hover:bg-cyan-700"
-                                            onClick={handleSave}>
+                                        <div className='text-sm font-bold mt-2'>IV. Persyaratan Administrasi & Dokumen Pendukung</div>
+                                        <div>
+                                            <div className="mb-2 block">
+                                                <Label htmlFor="small" value="Link Persyaratan Administrasi & Dokumen Pendukung "/>
+                                                <span className='text-xs text-orange-700'>(simpan seluruh dokumen pendukung kedalam 1 lokasi penyimpanan online (<i>cloud storage</i>) seperti GDrive, Dropbox, dsb meliputi <strong>dokumen persyaratan administratif (formulir ringkasan prestasi, formulir rekomendasi pimpinan dan surat pernyatan bebas hukuman disiplin) serta dokumen pendukung berupa foto/video/testimoni maupun data dukung lainnya</strong>. Pastikan lokasi penyimpanan dapat diakses (<i>shared</i>) dan dokumen tidak dimodifikasi setelah data disubmit)</span>
+                                            </div>
+                                            <input
+                                                value={dakung}
+                                                onChange={({target}) => setDakung(target.value)}
+                                                type="text"
+                                                id="comment12"
+                                                className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-cyan-500 focus:border-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                                placeholder="Link dokumen pendukung"
+                                                required
+                                            />
+                                        </div>
+                                        <div className="w-full">
+                                            <button className="w-full flex mt-8 cursor-pointer bg-cyan-600 text-white items-center py-2 rounded-lg justify-center border border-cyan-900 border-solid hover:bg-cyan-700" type='submit'>
                                             <PlusCircleIcon className='font-bold h-7 w-7 pr-1'/>
                                             <span className="">SIMPAN</span>
+                                            </button>
                                         </div>
                                     </div>
+                                    </form>
 
                                 </Dialog.Panel>
                             </Transition.Child>

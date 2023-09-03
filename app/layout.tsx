@@ -7,6 +7,7 @@ import Header from './components/header'
 import {useSelectedLayoutSegment} from 'next/navigation'
 import Footer from './components/footer'
 import { navigations } from './global'
+import Head from 'next/head'
 
 const roboto = Roboto({weight: '400', subsets: ['latin'], display: 'swap'})
 
@@ -37,6 +38,9 @@ export default function RootLayout({children} : {
             lang="id">
             <body className={roboto.className}>
                 <NextTopLoader color="#0E7490"/>
+                <Head>
+                    <title>My page title</title>
+                </Head>
                 <Header/>
                 <header className="bg-slate-100 shadow">
                     <div className="mx-auto max-w-7xl px-3 py-3 sm:px-6 lg:px-8">

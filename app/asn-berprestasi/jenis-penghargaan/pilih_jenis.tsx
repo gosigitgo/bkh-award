@@ -6,17 +6,24 @@ import {useState} from 'react';
 
 const jenis = [
     {
+        id:1,
         name: 'Inspiring Leader',
         desc: 'JPT Pratama/Pimpinan Satker/Setara',
-        disk: '160 GB SSD disk'
+        link: '/asn-berprestasi/pilih-inspiring-leader',
+        bgimg: "url('https://ropeg.kemkes.go.id/slide/penghargaan/yuk.png')"
+
     }, {
-        name: 'Future Leader',
-        desc: 'Pimpinan/setara pimpinan dibawah pimpinan satker',
-        disk: '512 GB SSD disk'
+        id:2,
+        name: 'The Future Leader',
+        desc: 'Pimpinan/Setara dibawah pimpinan satker',
+        link: '/asn-berprestasi/pilih-future-leader',
+        bgimg: "url('https://ropeg.kemkes.go.id/slide/penghargaan/yuk.png')"
     }, {
+        id:3,
         name: 'Best Innovator',
         desc: 'Seluruh pegawai',
-        disk: '1024 GB SSD disk'
+        link: '/asn-berprestasi/pilih-best-innovator',
+        bgimg: "url('https://ropeg.kemkes.go.id/slide/penghargaan/yuk.png')"
     }
 ]
 
@@ -36,17 +43,17 @@ function CheckIcon(props : any) {
 
 export default function PilihJenis(props : any) {
 
-    const [selected, setSelected] = useState(jenis[0])
-
+    const [selected, setSelected] = useState()
+    //console.log({pil:selected})
     function pilih(sel:any){
         setSelected(sel)
-        props.chgPilih(sel)
+        props.chgPilih(sel.link)
     }
     return (
         <div className='py-5'>
             <div className='w-full my-2'>Silahkan pilih kategori ASN Berprestasi dibawah.</div>
         <RadioGroup value={selected} onChange={pilih}>
-          <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
+          <RadioGroup.Label className="sr-only">Kategori</RadioGroup.Label>
           <div className="grid md:grid-cols-3 gap-3">
             {jenis.map((plan) => (
               <RadioGroup.Option
@@ -61,7 +68,7 @@ export default function PilihJenis(props : any) {
                   ${
                     checked ? 'bg-lime-500  text-white' : 'bg-white'
                   }
-                    relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none bg-[url('/images/yuk.png')] bg-contain bg-right-bottom bg-no-repeat`
+                    relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none bg-[${plan.bgimg}] bg-contain bg-right-bottom bg-no-repeat`
                 }
               >
                 {({ active, checked }) => (

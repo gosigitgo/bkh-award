@@ -104,7 +104,21 @@ export const pegawaiDipilih = async(nip_baru : string, triwulan : string, tahun 
         console.log('Error', err);
         return err
     }
+}
 
+export const listASNBerprestasi = async(kdsatker:string, tahun : string) => {
+    //console.log({nipbaru: nip_baru})
+    let postData = new FormData();
+    postData.append('thn', tahun);
+    postData.append('kdsatker', kdsatker);
+    try {
+        const pegawai = await axios.post(`${APIUrl}/list_asn_berprestasi`, postData, {timeout: 5000})
+        //console.log({pegawaiList: pegawai})
+        return pegawai.data;
+    } catch (err) {
+        console.log('Error', err);
+        return err
+    }
 }
 
 export const detailVote = async(nip_baru : string, triwulan : string, tahun : string) => {
@@ -143,6 +157,65 @@ export const savePilihan = async(nip_baru : string, nip_dipilih : string, triwul
     postData.append('v10', String(Number(v10)));
     try {
         const pegawai = await axios.post(`${APIUrl}/hotm_simpan`, postData, {timeout: 5000})
+        //console.log({savePeg: pegawai.data})
+        return pegawai.data;
+    } catch (err) {
+        console.log('Error', err);
+        return err
+    } 
+}
+
+export const saveASNBerprestasi = async(jenis: string, nip_baru : string, kdsatker : string, tahun : string, v1 : string, v2 : string, v3 : string, v4 : string, v5 : string, v6 : string, v7 : string, v8 : string, v9 : string, v10 : string, v11: string, dakung: string) => {
+    //console.log({nipbaru: nip_baru})
+    let postData = new FormData();
+    postData.append('jenis', jenis);
+    postData.append('nip_baru', nip_baru);
+    postData.append('kdsatker', kdsatker);
+    postData.append('thn', tahun);
+    postData.append('v1', v1);
+    postData.append('v2', v2);
+    postData.append('v3', v3);
+    postData.append('v4', v4);
+    postData.append('v5', v5);
+    postData.append('v6', v6);
+    postData.append('v7', v7);
+    postData.append('v8', v8);
+    postData.append('v9', v9);
+    postData.append('v10', v10);
+    postData.append('v11', v11);
+    postData.append('dakung', dakung);
+    try {
+        const pegawai = await axios.post(`${APIUrl}/asn_berprestasi_simpan`, postData, {timeout: 5000})
+        //console.log({savePeg: pegawai.data})
+        return pegawai.data;
+    } catch (err) {
+        console.log('Error', err);
+        return err
+    } 
+}
+
+export const saveASNBerprestasiInnovator = async(jenis: string, tipe:string, nip_baru : string, kdsatker : string, tahun : string, v1 : string, v2 : string, v3 : string, v4 : string, v5 : string, v6 : string, v7 : string, v8 : string, v9 : string, v10 : string, v11: string, dakung: string) => {
+    //console.log({nipbaru: nip_baru})
+    let postData = new FormData();
+    postData.append('jenis', jenis);
+    postData.append('tipe', tipe);
+    postData.append('nip_baru', nip_baru);
+    postData.append('kdsatker', kdsatker);
+    postData.append('thn', tahun);
+    postData.append('v1', v1);
+    postData.append('v2', v2);
+    postData.append('v3', v3);
+    postData.append('v4', v4);
+    postData.append('v5', v5);
+    postData.append('v6', v6);
+    postData.append('v7', v7);
+    postData.append('v8', v8);
+    postData.append('v9', v9);
+    postData.append('v10', v10);
+    postData.append('v11', v11);
+    postData.append('dakung', dakung);
+    try {
+        const pegawai = await axios.post(`${APIUrl}/asn_berprestasi_innovator_simpan`, postData, {timeout: 5000})
         //console.log({savePeg: pegawai.data})
         return pegawai.data;
     } catch (err) {

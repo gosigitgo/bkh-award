@@ -71,7 +71,7 @@ export default function KandidatFinal() {
                 swal("Error", "Terjadi Kesalahan. Silahkan login ulang!", 'error')
                 setLoadingScreen(false)
             })
-    })}, [])
+    })}, [router])
     return ((!loadingScreen)
         ? <div className="grid grid-auto-fit-lg gap-4 py-5 -z-100">
             {listPeg?.map((peg, index) => (

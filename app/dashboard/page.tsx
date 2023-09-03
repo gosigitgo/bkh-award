@@ -1,16 +1,16 @@
 "use client"
 
-import BkhWinner from "./bkh_winner";
-import axios from "axios";
+import BkhWinner from "./bkh_winner"; 
 import InfoCarousel from "./carousel";
 import swal from "sweetalert";
 import InspiringWinner from "./inspiring_winner";
 import FutureWinner from "./future_winner";
-import InnovatorWinner from "./innovator_winner";
+import InnovatorWinner from "./innovator_winner"; 
 import {useEffect, useState} from "react";
 import {LoadingScreen} from '../components/loadingscreen'
 import { useRouter } from "next/navigation";
 import {detailPegawai} from "../api/pegawai"
+import secureLocalStorage from "react-secure-storage"; 
 
 // export const metadata = {
 //     title: '.: Dashboard | Penghargaan Bhakti Karya Husada :.',
@@ -27,52 +27,36 @@ function titleCase(str:string) {
         .join(' ');
 }
 
-const fetchSession = async() => {
-    const res = await axios.get('https://penghargaan.kemkes.go.id/api/cookies');
-    return res.data
-};
-
 export default function Dashboard() {
     const router = useRouter()
-    const [nip, setNip] = useState()
-    const [nama, setNama] = useState()
-    const [loadingScreen, setLoadingScreen] = useState(true)
-    useEffect(() => {
+    const [nama, setNama] = useState() 
+    const [loadingScreen, setLoadingScreen] = useState(true) 
+    useEffect(() => { 
+		//console.log({sesnip:secureLocalStorage.getItem('session_nip')});
         setTimeout(async() => {
-            fetchSession().then((result) => { 
-                if(result.sess_login === true){
-                    detailPegawai(result.sess_nip).then((datapeg) => {
-                        //console.log({peg:datapeg.data[0]})
-                        setNip(datapeg.data[0].nip)
-                        setNama(datapeg.data[0].nama)
-                        setLoadingScreen(false)
-                    }).catch((err:Error) => {
-                        //console.log({errors:err})
-                        setLoadingScreen(false)
-                    })
-                    
-                }else {
-                    swal({
-                        title: "Error",
-                        text: "Session habis, silahkan login ulang!",
-                        icon: "warning",
-                        timer:2000
-                    })
-                    setLoadingScreen(false)
-                    router.push('http://auth-eoffice.kemkes.go.id/do-login')
-                }
-            }).catch((e : Error) => {
-                //console.log({errors:e})
-                swal("Error","Terjadi Kesalahan. Silahkan login ulang!", 'error')
+            detailPegawai(String(secureLocalStorage.getItem('session_nip'))).then((datapeg) => {
+                //console.log({peg:datapeg.data[0]})
+                setNama(datapeg.data[0].nama)
+                secureLocalStorage.setItem('session_kdsatker',datapeg.data[0].kd_satuan_organisasi)
                 setLoadingScreen(false)
-            })
+            }).catch((err:Error) => {
+				swal({
+					title: "Error",
+                    text: "Session habis, silahkan login ulang!",
+                    icon: "warning",  
+				  }).then(function(isConfirm) {
+					if (isConfirm) {
+					  router.push('http://auth-eoffice.kemkes.go.id/do-login')
+					} 
+				  }) 
+            })      
         }, 1000);
     }, [router]);
     return ((!loadingScreen)
     ?
         <div>
             <div
-                className="flex w-full font-bold text-2xl text-rose-700 mt-2 mb-4 sm:text-4xl">Halo {titleCase(String(nama))}
+                className="flex w-full font-bold text-2xl text-cyan-600 mt-2 mb-4 sm:text-2xl">Salam Sehat, {titleCase(String(nama))}
                 😊</div>
             <div className="relative scrollbar-none">
                 <div
